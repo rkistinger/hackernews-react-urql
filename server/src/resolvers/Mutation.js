@@ -3,15 +3,15 @@ const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
 
 function post(parent, { url, description }, context) {
-  // const userId = getUserId(context)
+  const userId = getUserId(context)
   return context.prisma.createLink({
     url,
     description,
     postedBy: {
-      // connect: {
-      //   id: userId
-      // }
-    }
+      connect: {
+        id: userId,
+      },
+    },
   })
 }
 

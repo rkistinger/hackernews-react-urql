@@ -6,20 +6,31 @@ import Link from './Link'
 
 // Create GraphQL query - gql parses string into the standard GraphQL AST
 const FEED_QUERY = gql`
-  query {
+  query GetFeed {
     feed {
       links {
         id
         createdAt
         description
         url
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
       }
     }
   }
 `
 
 const LinkList = () => {
-  // Pass GraphQL query to useQuery hook (executes immediately)
+  // Pass GraphQL query to useQuery hook
+  //  - eagerly executes queries and runs them immediately if no 'pause' option specified
   const [queryState] = useQuery({ query: FEED_QUERY })
   const { data, fetching, error } = queryState
 
@@ -29,8 +40,8 @@ const LinkList = () => {
 
   return (
     <div>
-      {data.feed.links.map((link) => (
-        <Link key={link.id} link={link} />
+      {data.feed.links.map((link, index) => (
+        <Link key={link.id} link={link} index={index} />
       ))}
     </div>
   )
