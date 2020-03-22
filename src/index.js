@@ -9,6 +9,7 @@ import {
   subscriptionExchange,
 } from 'urql'
 import { cacheExchange } from '@urql/exchange-graphcache'
+import { devtoolsExchange } from '@urql/devtools'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 
 import './styles/index.css'
@@ -89,6 +90,7 @@ const client = new Client({
   // Exchanges = middlewares used internally by urql (order matters)
   exchanges: [
     dedupExchange,
+    devtoolsExchange, // requires Chrome or FF extension
     cache,
     fetchExchange,
     subscriptionExchange({
