@@ -28,8 +28,8 @@ const Link = ({ index, link }) => {
 
   const upvote = () => {
     if (!mutationState.fetching) {
-      // The link received back from the mutation will automatically update the FEED_QUERY
-      // because we have enabled a normalized cache for the urql Client
+      // Because we are updating an existing link already in urql's normalized cache
+      // the FEED_QUERY will automatically refresh its returned data.
       executeMutation({ linkId: link.id })
     }
   }
